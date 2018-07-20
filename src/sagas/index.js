@@ -1,17 +1,7 @@
-import { call, put } from 'redux-saga/effects'
-import request from '../utils/request'
+import { takeEvery } from 'redux-saga/effects'
+import constants from '../constants'
+import * as passportSagas from './Passport'
 
-export function * signIn (data) {
-  try {
-    const token = yield call(request, '/api/session', {})
-    yield put({
-      type: 'SIGNIN_SUCCESS',
-      payload: token,
-    })
-  } catch (error) {
-    yield put({
-      type: 'SIGNIN_ERROR',
-      error
-    })
-  }
+export default function * rootSaga () {
+  yield takeEvery(constants.SIGN_IN_REQUEST, passportSagas.signInRequest)
 }

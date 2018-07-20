@@ -1,18 +1,6 @@
-import { handleActions } from 'redux-actions'
-import { signIn, signUp } from '../actions'
+import { combineReducers } from 'redux'
+import passport from './Passport'
 
-const defaultState = {token: undefined}
-
-const reducer = handleActions(
-  {
-    [signIn]: (state, {payload: {token}}) => {
-      return Object.assign({}, state, token)
-    },
-    [signUp]: (state, {payload: {token}}) => {
-      return Object.assign({}, state, token)
-    }
-  },
-  defaultState
-)
-
-export default reducer
+export default combineReducers({
+  passport
+})
