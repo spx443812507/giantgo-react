@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import passport from './Passport'
+import passport from './passport'
 
 export default combineReducers({
   passport

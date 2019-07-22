@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
-import './index.less'
+import './index.scss'
 import { Layout } from 'antd'
 
 const {Content} = Layout
@@ -44,11 +44,11 @@ class Index extends React.Component {
               })(
                 <Checkbox>Remember me</Checkbox>
               )}
-              <a className="login-form-forgot" href="">Forgot password</a>
+              <a className="login-form-forgot" href="/">Forgot password</a>
               <Button type="primary" htmlType="submit" className="login-form-button">
                 Log in
               </Button>
-              Or <a href="">register now!</a>
+              Or <a href="/">register now!</a>
             </FormItem>
           </Form>
         </Content>

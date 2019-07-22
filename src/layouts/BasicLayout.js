@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
-import './BasicLayout.less'
+import './BasicLayout.scss'
 
 const {Header, Content, Footer, Sider} = Layout
 

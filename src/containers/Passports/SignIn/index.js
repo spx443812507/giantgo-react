@@ -1,49 +1,44 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 import { connect } from 'react-redux'
-import { Layout, Alert } from 'antd'
+import { Layout, message } from 'antd'
 import { Link } from 'react-router-dom'
-import types from '../../../constants'
-import './index.less'
+import {
+  SIGN_IN
+} from '../../../constants/passport'
+import './index.scss'
 
 const {Content} = Layout
 const FormItem = Form.Item
 
 class SignInComponent extends React.Component {
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.isFail !== this.props.isFail) {
+      if (this.props.isFail) {
+        message.warning(this.props.failMessage)
+      }
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.signIn(values.userName, values.password)
+        this.props.signIn(values.username, values.password)
       }
     })
-  }
-
-  closeAlert = (e) => {
-    e.preventDefault()
-
-    this.props.closeAlert()
   }
 
   render () {
     const {getFieldDecorator} = this.props.form
     return (
       <Layout className="bg-container">
-        {this.props.isFail}
-        <div>
-          {
-            this.props.isFail ? (
-              <Alert message="登录失败" type="warning" showIcon closable afterClose={this.closeAlert}/>
-            ) : null
-          }
-          <p>{this.props.failMessage}</p>
-        </div>
         <Content>
           <Form onSubmit={this.handleSubmit} className="login-container">
             <FormItem>
               {
-                getFieldDecorator('userName', {
+                getFieldDecorator('username', {
                   rules: [{required: true, message: '请输入用户名!'}],
                 })(
                   <Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>} placeholder="用户名"/>
@@ -69,7 +64,7 @@ class SignInComponent extends React.Component {
                   <Checkbox>记住我</Checkbox>
                 )
               }
-              <a className="login-form-forgot" href="">忘记密码？</a>
+              <a className="login-form-forgot" href="/">忘记密码？</a>
               <Button type="primary" htmlType="submit" className="login-form-button">
                 登录
               </Button>
@@ -85,9 +80,8 @@ class SignInComponent extends React.Component {
 const WrappedSignIn = Form.create()(SignInComponent)
 
 const mapStateToProps = ({passport}, ownProps) => {
-  console.log(passport)
   return {
-    isSubmitting: passport.isSubmitting,
+    loading: passport.loading,
     isFail: passport.isFail,
     failMessage: passport.failMessage
   }
@@ -95,8 +89,8 @@ const mapStateToProps = ({passport}, ownProps) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    signIn: (userName, password) => {
-      dispatch({type: types.SIGN_IN_REQUEST, payload: {userName, password}})
+    signIn: (username, password) => {
+      dispatch({type: SIGN_IN, payload: {username, password}})
     }
   }
 }

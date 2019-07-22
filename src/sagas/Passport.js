@@ -1,19 +1,24 @@
 import { call, put } from 'redux-saga/effects'
 
 import request from '../utils/request'
-import actions from '../actions'
+import {
+  signInRequest,
+  signInSuccess,
+  signInFail
+} from '../actions/passport'
 
-export function * signInRequest ({payload}) {
+export function * signIn ({payload}) {
   try {
-    const token = yield call(request, 'http://localhost:4000/api/user/token', {
+    yield put(signInRequest())
+    const {token} = yield call(request, '/api/user/token', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    yield put(actions.signInSuccess(token))
+    yield put(signInSuccess(token))
   } catch (error) {
-    yield put(actions.signInFail(error))
+    yield put(signInFail(error))
   }
 }

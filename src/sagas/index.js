@@ -1,7 +1,9 @@
 import { takeEvery } from 'redux-saga/effects'
-import constants from '../constants'
-import * as passportSagas from './Passport'
+import {
+  SIGN_IN
+} from '../constants/passport'
+import * as passportSagas from './passport'
 
 export default function * rootSaga () {
-  yield takeEvery(constants.SIGN_IN_REQUEST, passportSagas.signInRequest)
+  yield takeEvery(SIGN_IN, passportSagas.signIn)
 }
